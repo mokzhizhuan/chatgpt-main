@@ -1,7 +1,7 @@
 # chatgpt
  Spring boot and VueJS combined
 <ul>Workflow</ul>
-![wf](https://github.com/mokzhizhuan/chatgpt-main/assets/53340265/2f3d7d12-a63c-422c-859f-ab4a0417cca1)
+<li>![Workflow](https://github.com/mokzhizhuan/chatgpt-main/assets/53340265/2f3d7d12-a63c-422c-859f-ab4a0417cca1)</li>
 
 <ul>Getting Started</ul>
 <li>Download Open JDK here and install</li>
@@ -12,3 +12,4 @@
 <li>Compile and build the code using Eclipse</li>
 <li>Run the development server using Eclipse</li>
 <li>Open http://localhost:8080 with your browser to see the result.</li>
+<li>Source repository spring boot from : https://github.com/lalumastan/chatgpt</li>
