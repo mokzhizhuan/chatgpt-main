@@ -17,10 +17,10 @@
           <h6
             class="m-3"
             id="title"
-            v-for="(chatgpt, ind) in chatgptbean"
-            :key="ind"
+            v-for="chatgpt in chatgptbean"
+            :key="chatgpt"
           >
-            {{ chatgpt.title }}
+            {{ chatgpt }}
           </h6>
           <div class="form-floating mx-3">
             <textarea
