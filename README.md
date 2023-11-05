@@ -13,3 +13,6 @@
 <li>Run the development server using Eclipse</li>
 <li>Open http://localhost:8080 with your browser to see the result.</li>
 <li>Source repository spring boot from : https://github.com/lalumastan/chatgpt</li>
+<li?Download CORS unblock extension for CORS to remove the  'Access-Control-Allow-Origin: *' header to local and remote web requests. </li>
+<li>https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino/related</li>
+<li>Compatiable Browser: Opera or Google Chrome</li>
