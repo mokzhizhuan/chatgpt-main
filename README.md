@@ -1,5 +1,7 @@
 # chatgpt
  Spring boot and VueJS combined
+<ul>Workflow</ul>
+![wf](https://github.com/mokzhizhuan/chatgpt-main/assets/53340265/2f3d7d12-a63c-422c-859f-ab4a0417cca1)
 
 <ul>Getting Started</ul>
 <li>Download Open JDK here and install</li>
