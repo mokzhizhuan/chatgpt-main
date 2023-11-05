@@ -13,11 +13,15 @@
           class="form-ai"
           encType="multipart/form-data"
           method="post"
-          v-for="(chatgpt, ind) in chatgptbean"
-          :key="ind"
-          th:action="@{/chat}"
         >
-          <h6 class="m-3" id="title">{{ chatgpt.title }}</h6>
+          <h6
+            class="m-3"
+            id="title"
+            v-for="(chatgpt, ind) in chatgptbean"
+            :key="ind"
+          >
+            {{ chatgpt.title }}
+          </h6>
           <div class="form-floating mx-3">
             <textarea
               class="form-control border border-info"
@@ -57,7 +61,7 @@ import axios from "axios";
 const API_URL = BASE_API_URL + "/api/V1/";
 axios.defaults.baseURL = API_URL;
 
-export default axios({
+export default {
   name: "HomeView",
   data() {
     return {
@@ -82,5 +86,5 @@ export default axios({
       });
   },
   methods: {},
-});
+};
 </script>
