@@ -1,10 +1,17 @@
 <template>
   <div>
     <div class="container my-3">
-      <div id="loading" class="text-bg-primary text-center rounded"></div>
+      <div
+        id="loading"
+        class="text-bg-primary text-center rounded"
+        ref="load"
+        v-show="loader"
+      ></div>
       <div
         id="chatGPTConversation"
         class="row my-3 border border-info rounded overflow-auto bg-dark"
+        ref="chat"
+        v-show="chatbot"
       ></div>
       <div class="row alert alert-info border border-info">
         <h2 class="text-center text-primary">Neo ChatGPT Chatbot</h2>
@@ -12,7 +19,7 @@
           id="chatGPTForm"
           class="form-ai"
           encType="multipart/form-data"
-          method="post"
+          v-on:submit="handleoutput"
         >
           <h6
             class="m-3"
@@ -29,6 +36,7 @@
               placeholder="Enter your question"
               id="prompt"
               style="height: 100px"
+              v-model="formdata.prompt"
               required
             ></textarea>
             <label for="prompt">Enter your question</label>
@@ -66,8 +74,10 @@ export default {
   data() {
     return {
       chatgptbean: [],
+      chatbot: false,
       formdata: new Chatmessage(),
       loading: false,
+      loader: false,
       submitted: false,
       errorMessage: "",
     };
@@ -78,13 +88,46 @@ export default {
       .then((response) => {
         this.chatgptbean = response.data;
       })
-      .then((res) => {
-        console.log(res);
-      })
       .catch((err) => {
         console.log(err.response);
       });
   },
-  methods: {},
+  methods: {
+    handleoutput() {
+      if (!this.formdata.prompt) {
+        return;
+      }
+      axios({
+        method: "post",
+        url: API_URL,
+        data: {
+          prompt: this.formdata.prompt,
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          this.chatbot = true;
+          this.$refs.chat.innerHTML =
+            '<code class="text-justify d-flex flex-lg-wrap chat"><strong class="small" style="font-size: 24px;">' +
+            response +
+            "</strong></code>";
+          var vm = this;
+          vm.showWait();
+          this.loading = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .then(() => (this.loading = false));
+    },
+    showWait() {
+      this.loader = true;
+      this.$refs.load.innerHTML =
+        'Processing.  Please wait ...  <img src="images/loading.gif" alt="Processing.  Please wait ..." width="13%">';
+    },
+    hideWait() {
+      this.loader = false;
+    },
+  },
 };
 </script>
