@@ -103,6 +103,7 @@ export default (await import("vue")).defineComponent({
             '<code class="text-justify d-flex flex-lg-wrap chat"><strong class="small" style="font-size: 24px;">' +
             response.data +
             '</strong></code>"';
+          vm.hideWait();
         })
         .catch((error) => {
           console.log(error);
