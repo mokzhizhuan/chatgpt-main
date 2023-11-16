@@ -25,7 +25,6 @@ import jakarta.servlet.http.HttpSession;
 @SessionAttributes({ "currentChat" })
 @Controller
 @RequestMapping("/api/V1")
-@CrossOrigin(origins = { "http://localhost:8081",  "http://localhost:8080" })
 public class ChatGPTController {
 	private static final Logger log = LoggerFactory.getLogger(ChatGPTController.class);
 
@@ -51,36 +50,33 @@ public class ChatGPTController {
 	@GetMapping("/")
 	public ResponseEntity<?> index(ChatGPTBean chatGPTBean, Model model, SessionStatus status) {
 		chatGPTBean.setTitle(messageSource.getMessage("homeText", null, locale).split("Q:")[0]);
-		model.addAttribute("chatGPTBean", chatGPTBean);
 		status.setComplete();
 		return new ResponseEntity<>(chatGPTBean, HttpStatus.OK);
 	}
 	
 	@ResponseBody
-	@PostMapping("http://localhost:8081/{prompt}")
-	public String chat(@PathVariable String prompt, ChatGPTBean chatGPTBean, Model model, HttpSession session) {
+	@PostMapping("/")
+	public ResponseEntity<?> chat(ChatGPTBean chatGPTBean, HttpSession session) {
 		log.info("Getting answer from Open AI ChatGPT");
-		chatGPTBean.setTitle(messageSource.getMessage("homeText", null, locale).split("Q:")[0]);
-		chatGPTBean.setPrompt(prompt);
-		String response = "Fatal Error";
+		String prompt = chatGPTBean.getPrompt(), response = "Fatal Error";
 		try {
 			String currentChat = (String) session.getAttribute("currentChat");
 			currentChat = (currentChat == null || "".equals(currentChat) ? "" : currentChat) + "\nQ: " + prompt
 					+ "\nA: ";
 			currentChat += chatGPTService.parseUnstructuredData(prompt).trim();
 			response = currentChat;
-			model.addAttribute("currentChat", currentChat);
 		} catch (Exception e) {
 			e.printStackTrace();
 			response = messageSource.getMessage("apiCallfailed", new String[] { e.getMessage() }, locale);
 		}
 
-		return response.trim();
+		return new ResponseEntity<>(response.trim(), HttpStatus.OK);
 	}
-
-	/*	@ResponseBody
+	
+	/*@ResponseBody
 	@PostMapping("/chat")
-	public String chat(@ModelAttribute("chatGPTBean") ChatGPTBean chatGPTBean, Model model, HttpSession session) {
+	public String chat(@ModelAttribute("chatGPTBean") ChatGPTBean chatGPTBean, Model model, HttpSession session) 
+	{
 		log.info("Getting answer from Open AI ChatGPT");
 		String prompt = chatGPTBean.getPrompt(), response = "Fatal Error";
 		try {
