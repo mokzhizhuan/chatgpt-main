@@ -99,6 +99,7 @@ export default (await import("vue")).defineComponent({
           this.loading = true;
           var vm = this;
           vm.showWait();
+          this.formdata.prompt = null;
           document.getElementById("chatGPTConversation").innerHTML =
             '<code class="text-justify d-flex flex-lg-wrap chat"><strong class="small" style="font-size: 24px;">' +
             response.data +

@@ -24,6 +24,7 @@ import jakarta.servlet.http.HttpSession;
 
 @SessionAttributes({ "currentChat" })
 @Controller
+@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/api/V1")
 public class ChatGPTController {
 	private static final Logger log = LoggerFactory.getLogger(ChatGPTController.class);
@@ -36,28 +37,18 @@ public class ChatGPTController {
 	@Autowired
 	private MessageSource messageSource;
 
-	/*@GetMapping("/")
-	public String index(ChatGPTBean chatGPTBean, Model model, SessionStatus status) {
-		chatGPTBean.setTitle(messageSource.getMessage("homeText", null, locale).split("Q:")[0]);
-		model.addAttribute("chatGPTBean", chatGPTBean);
-		status.setComplete();
-
-		return "index";
-	}*/
-	
-	
 	@ResponseBody
 	@GetMapping("/")
 	public ResponseEntity<?> index(ChatGPTBean chatGPTBean, SessionStatus status) {
 		chatGPTBean.setTitle(messageSource.getMessage("homeText", null, locale).split("Q:")[0]);
 		status.setComplete();
-		return new ResponseEntity<>(chatGPTBean, HttpStatus.OK);
+		return new ResponseEntity<>(chatGPTBean, HttpStatus.OK);//show title 
 	}
 	
 	@ResponseBody
 	@PostMapping("/")
 	public ResponseEntity<?> chat(ChatGPTBean chatGPTBean, HttpSession session) {
-		log.info("Getting answer from Open AI ChatGPT");
+		log.info("Getting answer from Open AI ChatGPT");//logs
 		String prompt = chatGPTBean.getPrompt(), response = "Fatal Error";
 		try {
 			String currentChat = (String) session.getAttribute("currentChat");
@@ -70,27 +61,6 @@ public class ChatGPTController {
 			response = messageSource.getMessage("apiCallfailed", new String[] { e.getMessage() }, locale);
 		}
 
-		return new ResponseEntity<>(response.trim(), HttpStatus.OK);
+		return new ResponseEntity<>(response.trim(), HttpStatus.OK);//show answer
 	}
-	
-	/*@ResponseBody
-	@PostMapping("/chat")
-	public String chat(@ModelAttribute("chatGPTBean") ChatGPTBean chatGPTBean, Model model, HttpSession session) 
-	{
-		log.info("Getting answer from Open AI ChatGPT");
-		String prompt = chatGPTBean.getPrompt(), response = "Fatal Error";
-		try {
-			String currentChat = (String) session.getAttribute("currentChat");
-			currentChat = (currentChat == null || "".equals(currentChat) ? "" : currentChat) + "\nQ: " + prompt
-					+ "\nA: ";
-			currentChat += chatGPTService.parseUnstructuredData(prompt).trim();
-			response = currentChat;
-			model.addAttribute("currentChat", currentChat);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response = messageSource.getMessage("apiCallfailed", new String[] { e.getMessage() }, locale);
-		}
-
-		return response.trim();
-	}*/
 }

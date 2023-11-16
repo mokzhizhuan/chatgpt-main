@@ -21,7 +21,7 @@ public class ChatGPTService {
 	private static final String API_URL = "https://api.openai.com/v1/";
 
 	// <Set OPENAI_DEMO_API_KEY in the system environment variable>
-	private static final String KEY = "";
+	private static final String KEY = "OPENAI_DEMO_API_KEY";
 
 	private static final ObjectMapper OM = new ObjectMapper();
 
