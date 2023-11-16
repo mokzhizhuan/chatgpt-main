@@ -48,7 +48,7 @@ public class ChatGPTController {
 	
 	@ResponseBody
 	@GetMapping("/")
-	public ResponseEntity<?> index(ChatGPTBean chatGPTBean, Model model, SessionStatus status) {
+	public ResponseEntity<?> index(ChatGPTBean chatGPTBean, SessionStatus status) {
 		chatGPTBean.setTitle(messageSource.getMessage("homeText", null, locale).split("Q:")[0]);
 		status.setComplete();
 		return new ResponseEntity<>(chatGPTBean, HttpStatus.OK);
