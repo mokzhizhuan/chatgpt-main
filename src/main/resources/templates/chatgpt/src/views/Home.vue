@@ -98,21 +98,21 @@ export default (await import("vue")).defineComponent({
           console.log(response);
           this.loading = true;
           var vm = this;
-          vm.showWait();
-          this.formdata.prompt = null;
+          vm.showWait(); //show loaders
           document.getElementById("chatGPTConversation").innerHTML =
             '<code class="text-justify d-flex flex-lg-wrap chat"><strong class="small" style="font-size: 24px;">' +
             response.data +
-            '</strong></code>"';
-          vm.hideWait();
+            '</strong></code>"'; //answer
+          vm.hideWait(); //hider loader
         })
         .catch((error) => {
           console.log(error);
         });
     },
     showWait() {
-      this.loader = true;
+      this.loader = true; //loading
       this.$refs.load.innerHTML = "Processing.  Please wait ...";
+      this.formdata.prompt = null; //empty formdata
     },
     hideWait() {
       this.loader = false;
